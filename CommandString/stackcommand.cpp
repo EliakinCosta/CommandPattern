@@ -39,5 +39,5 @@ void StackCommand::redo()
     if(this->m_currentIndex==(this->m_commandStack->length()-1) && this->m_commandStack->isEmpty())
         return;
     this->m_currentIndex++;
-    this->m_commandStack->at(this->m_currentIndex)->redo();
+    this->m_commandStack->at(this->m_currentIndex-1)->redo();
 }

@@ -19,6 +19,14 @@ int main(int argc, char *argv[])
     qDebug() << doc;
     cmd.redo();
     qDebug() << doc;
+    cmd.push(new AppendCommand(&doc, "ads"));
+    qDebug() << doc;
+    cmd.undo();
+    qDebug() << doc;
+    cmd.undo();
+    qDebug() << doc;
+    cmd.push(new AppendCommand(&doc, "ifba"));
+    qDebug() << doc;
 
     return a.exec();
 }
