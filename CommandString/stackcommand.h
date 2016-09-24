@@ -11,8 +11,8 @@ public:
     StackCommand();
     virtual ~StackCommand();
     void push(ICommand *command);
-    void undo();
-    void redo();
+    bool undo();
+    bool redo();
 private:
     QList<ICommand *> *m_commandStack;
     int m_currentIndex;

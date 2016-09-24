@@ -16,28 +16,31 @@ StackCommand::~StackCommand()
 
 void StackCommand::push(ICommand *command)
 {
-    if (this->m_currentIndex == (this->m_commandStack->length() - 1))
+    if (this->m_currentIndex < (this->m_commandStack->length()))
     {
-        this->m_commandStack->erase(this->m_commandStack->begin(), this->m_commandStack->end());
+        for(int i=m_currentIndex;i<this->m_commandStack->length();i++)
+            this->m_commandStack->removeAt(i);
     }
     m_currentIndex++;
     this->m_commandStack->append(command);
     command->redo();
+
 }
 
-void StackCommand::undo()
+bool StackCommand::undo()
 {
-    qDebug() << m_currentIndex;
     if(this->m_currentIndex==0)
-        return;
+        return false;
     this->m_commandStack->at(this->m_currentIndex-1)->undo();
     this->m_currentIndex--;
+    return true;
 }
 
-void StackCommand::redo()
+bool StackCommand::redo()
 {
-    if(this->m_currentIndex==(this->m_commandStack->length()-1) && this->m_commandStack->isEmpty())
-        return;
+    if(this->m_currentIndex==(this->m_commandStack->length()) || this->m_commandStack->isEmpty())
+        return false;
     this->m_currentIndex++;
     this->m_commandStack->at(this->m_currentIndex-1)->redo();
+    return true;
 }
